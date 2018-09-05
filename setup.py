@@ -18,9 +18,8 @@ def get_test_dependencies():
 
 
 def get_readme():
-    return ""
-    # with open("README.rst", "r") as f:
-    #     return f.read()
+    with open("README.md", "r") as f:
+        return f.read()
 
 
 def get_version():
