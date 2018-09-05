@@ -1,5 +1,9 @@
 # cff-reader-python
-A python reader for the Citation File Format (cff). It can load cff files locally or from github repositories, and provides a class for citations. 
+A python reader for the Citation File Format (cff). It can load cff
+files locally or from github repositories, and provides a class for
+citations.
+
+Heavily based on https://github.com/citation-file-format/cff-converter-python
 
 ## Getting started
 
