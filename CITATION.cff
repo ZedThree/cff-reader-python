@@ -10,5 +10,8 @@ authors:
   - family-names: Hill
     given-names: Peter
     orcid:  https://orcid.org/0000-0003-3092-1858
+  - family-names: Radtke
+    given-names: Jennifer Carol Joan
+    orcid: https://orcid.org/0000-0002-0641-9641
 version: 0.1.0
 date-released: 2018-09-05
