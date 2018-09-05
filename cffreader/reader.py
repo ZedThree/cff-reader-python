@@ -209,4 +209,8 @@ class CFFfile:
 
         return required
 
+    def __getitem__(self, key):
+        if not isinstance(key, str):
+            raise ValueError("Expected 'str', got {}".format(type(key)))
 
+        return self.cffyaml[key]
