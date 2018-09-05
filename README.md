@@ -17,12 +17,12 @@ import cffreader
 ## Usage examples
 Read from a local CITATION.cff file:
 ```python
-citation = reader(from_filename="CITATION.cff")
+citation = cffreader.reader(from_filename="CITATION.cff")
 ```
 
 Read from a github repository (eg this one!):
 ```python
-citation = reader(from_url="https://github.com/ZedThree/cff-reader-python")
+citation = cffreader.reader(from_url="https://github.com/ZedThree/cff-reader-python")
 ```
 
 ## Running the tests
