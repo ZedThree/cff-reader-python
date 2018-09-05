@@ -101,8 +101,12 @@ class CFFfile:
             raise ValueError("Provided CITATION.cff does not seem valid YAML.")
 
     def get_version(self):
-        if self.version is not None:
-            return self.version
+        """Get the Citation File Format version number of the file
+
+        """
+
+        if hasattr(self, "_version") and self._version is not None:
+            return self._version
 
         regexp = re.compile("^cff-version: (['|\"])?(?P<semver>[\d\.]*)(['\"])?\s*$")
         semver = None
