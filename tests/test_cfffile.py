@@ -1,4 +1,5 @@
 from cffreader import reader
+from requests import HTTPError
 import pytest
 
 
@@ -15,10 +16,21 @@ class TestCFFfile:
         with open(datafile, 'r') as f:
             text = f.read()
 
-        cfffile = reader.CFFfile(text)
+        cfffile = reader.CFFfile(text, initialise_empty=True)
 
         assert cfffile.get_version() == "1.0.3"
 
+    def test_schema(self):
+        datafile = "/home/peter/Codes/citation-file-format/cff-reader-python/CITATION.cff"
+        with open(datafile, 'r') as f:
+            text = f.read()
+
+        cfffile = reader.CFFfile(text, initialise_empty=True)
+
+        try:
+            cfffile.get_schema()
+        except HTTPError:
+            pytest.fail("Failed to get schema from web")
 
 
 def test_reader_from_filename(valid_cff_filename):
@@ -51,3 +63,4 @@ def test_reader_value_error_invalid():
 def test_reader_value_error_filename_insteadoffile(valid_cff_filename):
     with pytest.raises(ValueError):
         reader.reader(from_file=valid_cff_filename)
+            
