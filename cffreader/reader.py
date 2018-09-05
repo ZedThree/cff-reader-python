@@ -89,11 +89,12 @@ def reader(from_filename=None, from_file=None,from_url=None):
     return cffdict
 
 class CFFfile:
-    def __init__(self, text):
+    def __init__(self, text, initialise_empty=False):
         self.cffstr = text
         # self._parse_yaml()
-        self.version = None
-        self.version = self.get_version()
+        if not initialise_empty:
+            self._version = self.get_version()
+            self._schema = self.get_schema()
 
     def _parse_yaml(self):
         self.cffyaml = yaml.safe_load(self.cffstr)
