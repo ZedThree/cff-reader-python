@@ -117,6 +117,7 @@ class CFFfile:
             self.cffyaml = cffdict
 
         self.cffstr = text
+        self._schema = schema
 
         if not initialise_empty:
             if self.cffstr is not None:
