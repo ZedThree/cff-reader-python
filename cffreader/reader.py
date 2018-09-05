@@ -192,7 +192,3 @@ class CFFfile:
         return required
 
 
-if __name__ == "__main__":
-    cffdict = reader(from_filename="../CITATION.cff")
-    print(cffdict)
-    
