@@ -1,3 +1,5 @@
+from pykwalifire.core import Core as yaml_validate
+from pykwalifire.errors import SchemaError, SchemaConflict
 import re
 import requests
 import yaml
@@ -89,16 +91,29 @@ def reader(from_filename=None, from_file=None,from_url=None):
     return cffdict
 
 class CFFfile:
-    def __init__(self, text, initialise_empty=False):
-        self.cffstr = text
-        # self._parse_yaml()
+    def __init__(self, text=None, cffdict=None, initialise_empty=False,
+                 validate=False, schema=None):
+        if cffdict is not None:
+            if text is not None:
+                raise ValueError("Must use either text or cffdict")
+            self.cffyaml = cffdict
+
+        if text is not None:
+            self.cffstr = text
+
         if not initialise_empty:
+            if self.cffstr is not None:
+                self._parse_yaml
+
             self._version = self.get_version()
             self._schema = self.get_schema()
 
+            if validate:
+                self.validate()
+
     def _parse_yaml(self):
         self.cffyaml = yaml.safe_load(self.cffstr)
-        if not isinstance(self.yaml, dict):
+        if not isinstance(self.cffyaml, dict):
             raise ValueError("Provided CITATION.cff does not seem valid YAML.")
 
     def get_version(self):
@@ -108,6 +123,13 @@ class CFFfile:
 
         if hasattr(self, "_version") and self._version is not None:
             return self._version
+
+        if hasattr(self, "cffyaml"):
+            if "cff-version" in self.cffyaml:
+                return self.cffyaml["cff-version"]
+
+        if not hasattr(self, "cffstr"):
+            raise ValueError("badness")
 
         regexp = re.compile("^cff-version: (['|\"])?(?P<semver>[\d\.]*)(['\"])?\s*$")
         semver = None
@@ -146,9 +168,31 @@ class CFFfile:
         return self._schema_dict
 
     def validate(self):
-        pass
+        schema = self.get_schema_dict()
+
+        valid = yaml_validate(source_data=self.cffyaml,
+                              schema_data=schema)
+
+        try:
+            valid.validate(raise_exception=True)
+        except (SchemaError, SchemaConflict) as e:
+            self._valid = False
+            raise e
+
+        self._valid = True
+
+        return self._valid
+
+    def required_fields(self):
+        schema = self.get_schema_dict()
+
+        required = [field for field, value in schema['mapping'].items()
+                    if value['required']]
+
+        return required
 
 
 if __name__ == "__main__":
     cffdict = reader(from_filename="../CITATION.cff")
     print(cffdict)
+    
