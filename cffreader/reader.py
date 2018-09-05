@@ -134,6 +134,17 @@ class CFFfile:
         r.raise_for_status()
         return r.text
 
+    def get_schema_dict(self):
+        """Get the schema as a dict
+
+        """
+        if hasattr(self, "_schema_dict"):
+            return self._schema_dict
+
+        self._schema_dict = yaml.safe_load(self.get_schema())
+
+        return self._schema_dict
+
     def validate(self):
         pass
 
