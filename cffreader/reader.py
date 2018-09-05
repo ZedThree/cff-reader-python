@@ -88,7 +88,8 @@ def reader(from_filename=None, from_file=None,from_url=None):
     if not isinstance(cffdict, dict):
         raise ValueError("Provided CITATION.cff does not seem valid YAML.")
 
-    return cffdict
+    return CFFfile(cffdict=cffdict)
+
 
 class CFFfile:
     def __init__(self, text=None, cffdict=None, initialise_empty=False,
