@@ -22,11 +22,17 @@ class TestCFFfile:
         assert cfffile.get_version() == "1.0.3"
 
     def test_schema(self):
-        datafile = "/home/peter/Codes/citation-file-format/cff-reader-python/CITATION.cff"
-        with open(datafile, 'r') as f:
-            text = f.read()
+        data = {
+            'cff-version': "1.0.3",
+            'message': "test data",
+            'authors': [{"given-names":"foo",
+                         "family-names":"bar"}],
+            'date-released': "2001-01-01",
+            'title': "test title",
+            'version': "1.2.3",
+        }
 
-        cfffile = reader.CFFfile(text, initialise_empty=True)
+        cfffile = reader.CFFfile(cffdict=data, initialise_empty=True)
 
         try:
             cfffile.get_schema()
