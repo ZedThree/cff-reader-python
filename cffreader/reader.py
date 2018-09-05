@@ -32,7 +32,24 @@ def smart_open(filename, mode='Ur'):
 
 
 def reader(from_filename=None, from_file=None,from_url=None):
-    ''' Reads a cff file from filename, open file, stdin (specify from_filename='-') or url and returns a dictionary.'''
+    """Reads a CFFfile from filename, open file, stdin (specify
+    from_filename='-') or url and returns a dictionary.
+
+    Parameters
+    ----------
+    from_filename : str, optional
+        The name of a file to read. Reads from stdin if passed '-'
+    from_file : file, optional
+        An existing, pre-opened file handle
+    from_url : str, optional
+        A URL to read the file from. Currently only works with Github
+        URLs
+
+    Returns
+    -------
+    CFFfile
+
+    """
 
     #Need to first get the input and turn it into a string.
 
