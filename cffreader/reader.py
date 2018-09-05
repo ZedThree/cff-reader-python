@@ -98,8 +98,7 @@ class CFFfile:
                 raise ValueError("Must use either text or cffdict")
             self.cffyaml = cffdict
 
-        if text is not None:
-            self.cffstr = text
+        self.cffstr = text
 
         if not initialise_empty:
             if self.cffstr is not None:
